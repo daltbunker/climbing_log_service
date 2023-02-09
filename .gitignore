@@ -4,5 +4,8 @@ HELP.md
 .vscode/**
 
 ## JAVA ##
-*.class
 *.jar
+.classpath
+.project
+.settings/
+target/
