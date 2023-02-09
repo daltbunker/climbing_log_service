@@ -2,3 +2,7 @@
 **/.DS_Store
 HELP.md
 .vscode/**
+
+## JAVA ##
+*.class
+*.jar
