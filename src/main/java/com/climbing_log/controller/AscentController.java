@@ -38,7 +38,6 @@ public class AscentController {
             @RequestBody @Valid Ascent newAscent,
             @RequestParam(required = true, name = "user") String username,
             @RequestParam(required = true, name = "climb" ) Integer climb_id) {
-
         Climb climb = climbService.getClimbById(climb_id);
         newAscent.setClimb(climb);
         User user = userService.getUserByUsername(username);
