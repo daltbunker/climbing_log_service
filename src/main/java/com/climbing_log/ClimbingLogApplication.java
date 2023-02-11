@@ -24,7 +24,7 @@ public class ClimbingLogApplication {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
 				registry.addMapping("/api/**")
-					.allowedOrigins("http://localhost:4200", "https://climbinglogclient-production.up.railway.app")
+					.allowedOrigins("http://localhost:4200", "https://climbing-log-client.onrender.com")
 					.allowedMethods("GET", "POST", "PUT", "DELETE");
 			}
 		};
