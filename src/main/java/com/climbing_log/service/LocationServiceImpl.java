@@ -63,4 +63,10 @@ public class LocationServiceImpl implements LocationService {
         }
         return areas;
     }
+
+    @Override
+    public Integer getLocationId(Location location) {
+        Integer locationId = locationRepository.findLocationId(location);
+        return locationId != null ? locationId : -1;
+    }
 }

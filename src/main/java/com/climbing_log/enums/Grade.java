@@ -66,4 +66,13 @@ public enum Grade {
     public boolean isRoute() {
         return this.grade.charAt(0) == '5';
     }
+
+    public static Grade fromName(String name) {
+        for (Grade grade : Grade.values()) {
+          if (grade.getGrade().equalsIgnoreCase(name)) {
+            return grade;
+          }
+        }
+        throw new IllegalArgumentException("No Enum constant with name " + name);
+      }
 }

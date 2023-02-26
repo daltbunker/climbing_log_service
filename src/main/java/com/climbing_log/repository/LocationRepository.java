@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.climbing_log.enums.ClimbType;
@@ -20,5 +21,8 @@ public interface LocationRepository extends JpaRepository<Location, Integer> {
 
     @Query("SELECT DISTINCT l.area FROM Location l INNER JOIN Climb c ON l.id = c.location.id WHERE c.type = ?1 AND l.area != null")
     public List<String> findAreas(ClimbType climbType);
+
+    @Query("SELECT DISTINCT l.id FROM Location l WHERE l.country = :#{#location.country} AND (l.state = :#{#location.state} OR l.state IS NULL) AND l.area = :#{#location.area} AND l.sector = :#{#location.sector}")
+    public Integer findLocationId(@Param("location") Location location);
 
 }

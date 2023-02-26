@@ -14,8 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.climbing_log.enums.ClimbType;
+import com.climbing_log.enums.Grade;
 import com.climbing_log.model.Climb;
 import com.climbing_log.model.ClimbLocation;
+import com.climbing_log.model.ClimbRequest;
 import com.climbing_log.model.Location;
 import com.climbing_log.service.ifc.ClimbService;
 import com.climbing_log.service.ifc.LocationService;
@@ -28,15 +31,36 @@ public class ClimbController {
     @Autowired
     LocationService locationService;
 
-    @PostMapping(path = "/add/{location_id}") 
+    @PostMapping(path = "/add") 
     public ResponseEntity<Climb> addClimb(
-            @RequestBody @Valid Climb newClimb,
-            @PathVariable(name = "location_id") Integer location_id) {
+            @RequestBody @Valid ClimbRequest newClimb) {
+        Location location = new Location();
+        location.setArea(newClimb.getArea());
+        location.setCountry(newClimb.getCountry());
+        location.setSector(newClimb.getSector());
+        location.setState(newClimb.getState());
 
-        Location location = locationService.getLocationById(location_id);
-        newClimb.setLocation(location);
-        Climb climb = climbService.addClimb(newClimb);
-        return ResponseEntity.ok(climb);
+        Climb climb = new Climb();
+        Grade grade = Grade.fromName(newClimb.getGrade());
+        if (newClimb.getGrade().charAt(0) == 'V') {
+            climb.setType(ClimbType.BOULDER);
+        } else {
+            climb.setType(ClimbType.ROUTE);
+        }
+        climb.setName(newClimb.getName());
+        climb.setGrade(grade);
+
+        Integer locationId = locationService.getLocationId(location);
+        if (locationId > 0) {
+            Location existingLocation = locationService.getLocationById(locationId);
+            climb.setLocation(existingLocation);
+        } else {
+            Location newLocation = locationService.addLocation(location);
+            climb.setLocation(newLocation);
+        }
+
+        Climb addedClimb = climbService.addClimb(climb);
+        return ResponseEntity.ok(addedClimb);
     }
 
     @GetMapping(path = "/{id}")

@@ -15,5 +15,7 @@ public interface LocationService {
     List<String> getSectors(ClimbType climbType);
     
     List<String> getAreas(ClimbType climbType);
+
+    Integer getLocationId(Location location);
 }
     
