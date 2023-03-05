@@ -50,6 +50,7 @@ public class BlogController {
     @RequestParam(required = true, value = "body") String body,
     @RequestParam(required = true, value = "user") String username
   ) {
+    System.out.println(body);
     Blog blog = new Blog();
     if (!image.getName().isEmpty()) {
       try {
