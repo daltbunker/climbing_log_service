@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -144,10 +145,22 @@ public class BlogController {
 
   @GetMapping(path="/image/{image_id}")
   public ResponseEntity<Image> getImage(
-    @PathVariable(required = true, value="image_id") Integer imageId
+    @PathVariable(required = true, value = "image_id") Integer imageId
   ) {
     Image image = imageService.getImageById(imageId);
     return ResponseEntity.ok(image);
+  }
+
+  @PutMapping(path="/{blog_id}")
+  public ResponseEntity<Blog> updateBlog(
+    @PathVariable(required = true, value = "blog_id") Integer blogId,
+    @RequestBody Blog blog
+  ) {
+    Blog oldBlog = blogService.getBlogById(blogId);
+    oldBlog.setTitle(blog.getTitle());
+    oldBlog.setBody(blog.getBody());
+    Blog savedBlog = blogService.updateBlog(oldBlog);
+    return ResponseEntity.ok(savedBlog);
   }
 
 }
