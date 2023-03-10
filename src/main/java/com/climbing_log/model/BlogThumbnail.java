@@ -6,10 +6,10 @@ public class BlogThumbnail {
   private Integer id;
   private String body;
   private String title;
-  private byte[] image;
   private LocalDateTime createdDate;
   private Integer commentCount;
   private Integer likeCount;
+  private Integer imageId;
 
   public Integer getId() {
     return id;
@@ -29,12 +29,7 @@ public class BlogThumbnail {
   public void setTitle(String title) {
     this.title = title;
   }
-  public byte[] getImage() {
-    return image;
-  }
-  public void setImage(byte[] image) {
-    this.image = image;
-  }
+
   public LocalDateTime getCreatedDate() {
     return createdDate;
   }
@@ -52,5 +47,11 @@ public class BlogThumbnail {
   }
   public void setLikeCount(Integer likeCount) {
     this.likeCount = likeCount;
+  }
+  public Integer getImageId() {
+    return imageId;
+  }
+  public void setImageId(Integer imageId) {
+    this.imageId = imageId;
   }
 }

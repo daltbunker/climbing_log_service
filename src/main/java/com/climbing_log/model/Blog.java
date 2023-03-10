@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -37,6 +38,10 @@ public class Blog {
   private String title;
   @Lob
   private byte[] image;
+  @OneToOne(cascade = CascadeType.ALL)
+  @JoinColumn(name = "image_id")
+  @JsonIgnore
+  private Image imageObject;
 
   public Integer getId() {
     return id;
@@ -82,5 +87,11 @@ public class Blog {
   }
   public void setImage(byte[] image) {
     this.image = image;
+  }
+  public Image getImageObject() {
+    return imageObject;
+  }
+  public void setImageObject(Image imageObject) {
+    this.imageObject = imageObject;
   }
 }

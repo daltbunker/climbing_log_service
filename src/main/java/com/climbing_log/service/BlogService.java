@@ -34,9 +34,9 @@ public class BlogService {
     return blog;
   }
 
-  public Blog updateBlog(Blog newBlog) {
-    // TODO Auto-generated method stub
-    return null;
+  public Blog updateBlog(Blog updatedBlog) {
+    Blog blog = blogRepository.save(updatedBlog);
+    return blog;
   }
 
   public Blog getBlogById(Integer id) {
@@ -107,8 +107,10 @@ public class BlogService {
       blogThumbnail.setLikeCount(likes.size());
       blogThumbnail.setId(blog.getId());
       blogThumbnail.setCreatedDate(blog.getCreatedDate());
-      blogThumbnail.setImage(blog.getImage());
       blogThumbnail.setTitle(blog.getTitle());
+      if (blog.getImageObject() != null) {
+        blogThumbnail.setImageId(blog.getImageObject().getId());
+      }
       if (blog.getBody().length() > 350) {
         String trimmedBody = blog.getBody().substring(0, 350);
         blogThumbnail.setBody(trimmedBody);

@@ -6,6 +6,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -23,11 +24,13 @@ import com.climbing_log.model.BlogPage;
 import com.climbing_log.model.BlogThumbnail;
 import com.climbing_log.model.Comment;
 import com.climbing_log.model.CommentUser;
+import com.climbing_log.model.Image;
 import com.climbing_log.model.Like;
 import com.climbing_log.model.LikeId;
 import com.climbing_log.model.User;
 import com.climbing_log.service.BlogService;
 import com.climbing_log.service.CommentService;
+import com.climbing_log.service.ImageService;
 import com.climbing_log.service.LikeService;
 import com.climbing_log.service.UserService;
 
@@ -42,27 +45,15 @@ public class BlogController {
   LikeService likeService;
   @Autowired
   CommentService commentService;
+  @Autowired
+  ImageService imageService;
 
-  @PostMapping(path = "/add", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+  @PostMapping(path = "/add")
   public ResponseEntity<Blog> addBlog(
-    @RequestParam(required = true, value = "image") MultipartFile image,
-    @RequestParam(required = true, value = "title") String title,
-    @RequestParam(required = true, value = "body") String body,
+    @RequestBody Blog blog,
     @RequestParam(required = true, value = "user") String username
   ) {
-    Blog blog = new Blog();
-    if (!image.getName().isEmpty()) {
-      try {
-        byte[] byteImage = image.getBytes();
-        blog.setImage(byteImage);
-      } catch(IOException e) {
-
-      }
-    }
-    blog.setTitle(title);
-    blog.setBody(body);
-    User user = userService.getUserByUsername(username);
-    blog.setAuthor(user.getUsername());
+    blog.setAuthor(username);
     Blog addedBlog = blogService.addBlog(blog);
     return ResponseEntity.ok(addedBlog);
   }
@@ -129,4 +120,34 @@ public class BlogController {
 
     return ResponseEntity.ok(commentUser);
   } 
+
+  @PostMapping(path="/{blog_id}/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+  public ResponseEntity<Image> addImage(
+    @RequestParam(required = true, value = "image") MultipartFile newImage,
+    @PathVariable(required = true, value = "blog_id") Integer blogId
+  ) {
+    Blog blog = blogService.getBlogById(blogId);
+    Image image = new Image();
+    if (!newImage.getName().isEmpty()) {
+      try {
+        byte[] byteImage = newImage.getBytes();
+        image.setImage(byteImage);
+      } catch(IOException e) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+      }
+    }
+    Image savedImage = imageService.addImage(image);
+    blog.setImageObject(savedImage);
+    blogService.updateBlog(blog);
+    return ResponseEntity.ok(savedImage);
+  }
+
+  @GetMapping(path="/image/{image_id}")
+  public ResponseEntity<Image> getImage(
+    @PathVariable(required = true, value="image_id") Integer imageId
+  ) {
+    Image image = imageService.getImageById(imageId);
+    return ResponseEntity.ok(image);
+  }
+
 }
