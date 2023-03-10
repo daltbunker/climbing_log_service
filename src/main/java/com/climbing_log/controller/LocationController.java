@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.climbing_log.enums.ClimbType;
 import com.climbing_log.model.AllLocations;
 import com.climbing_log.model.Location;
-import com.climbing_log.service.ifc.LocationService;
+import com.climbing_log.service.LocationService;
 
 @RestController
 @RequestMapping(path = "/api/locations")

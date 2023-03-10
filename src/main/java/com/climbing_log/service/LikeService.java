@@ -12,7 +12,7 @@ import com.climbing_log.model.LikeId;
 import com.climbing_log.repository.LikeRepository;
 
 @Service
-public class LikeServiceImpl {
+public class LikeService {
   @Autowired
   private LikeRepository likeRepository;
 

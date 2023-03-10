@@ -19,19 +19,19 @@ import com.climbing_log.model.Ascent;
 import com.climbing_log.model.AscentClimb;
 import com.climbing_log.model.Climb;
 import com.climbing_log.model.User;
-import com.climbing_log.service.AscentServiceImpl;
-import com.climbing_log.service.ClimbServiceImpl;
-import com.climbing_log.service.UserServiceImpl;
+import com.climbing_log.service.AscentService;
+import com.climbing_log.service.ClimbService;
+import com.climbing_log.service.UserService;
 
 @RestController
 @RequestMapping(path = "/api/ascents")
 public class AscentController {
     @Autowired
-    AscentServiceImpl ascentService;
+    AscentService ascentService;
     @Autowired
-    ClimbServiceImpl climbService;
+    ClimbService climbService;
     @Autowired
-    UserServiceImpl userService;
+    UserService userService;
 
     @PostMapping(path = "/add")
     public ResponseEntity<Ascent> addAscent(

@@ -9,13 +9,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.climbing_log.model.AuthResponse;
 import com.climbing_log.model.AuthRequest;
-import com.climbing_log.service.AuthenticationServiceImpl;
+import com.climbing_log.service.AuthenticationService;
 
 @RestController
 @RequestMapping(path = "api")
 public class UserController {
     @Autowired
-    AuthenticationServiceImpl authenticationService;
+    AuthenticationService authenticationService;
     
     @PostMapping(path = "/auth/signup")
     public ResponseEntity<AuthResponse> registerUser(

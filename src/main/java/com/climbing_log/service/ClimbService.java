@@ -12,14 +12,12 @@ import com.climbing_log.exception.ResourceNotFoundException;
 import com.climbing_log.model.Climb;
 import com.climbing_log.model.ClimbLocation;
 import com.climbing_log.repository.ClimbRepository;
-import com.climbing_log.service.ifc.ClimbService;
 
 @Service
-public class ClimbServiceImpl implements ClimbService {
+public class ClimbService {
     @Autowired
     private ClimbRepository climbRepository;
 
-    @Override
     public Climb addClimb(Climb newClimb) {
         if (newClimb.getGrade().isRoute() && newClimb.getType() == ClimbType.BOULDER) {
 	        throw new IllegalArgumentException("climbe type and grade don't match");
@@ -29,7 +27,6 @@ public class ClimbServiceImpl implements ClimbService {
         return climb;
     }
 
-    @Override
     public Climb getClimbById(Integer id) {
         if (id == null) {
             throw new IllegalArgumentException("climb id must not be null");
@@ -44,7 +41,6 @@ public class ClimbServiceImpl implements ClimbService {
         return climb;
     }
 
-    @Override
     public List<ClimbLocation> getAllClimbs() {
         List<Climb> climbs = climbRepository.findAll();
         if (climbs == null || climbs.isEmpty()) {
@@ -54,7 +50,6 @@ public class ClimbServiceImpl implements ClimbService {
         return climbLocations;
     }
 
-    @Override
     public List<ClimbLocation> getClimbsByLocation(Integer id) {
         List<Climb> climbs = climbRepository.findClimbsByLocation(id);
         if (climbs == null || climbs.isEmpty()) {
@@ -64,7 +59,6 @@ public class ClimbServiceImpl implements ClimbService {
         return climbLocations;
     }
 
-    @Override
     public List<ClimbLocation> getClimbsByName(String name) {
         List<Climb> climbs = climbRepository.findClimbsByName(name);
         if (climbs == null || climbs.isEmpty()) {

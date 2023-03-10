@@ -17,32 +17,28 @@ import com.climbing_log.model.CommentUser;
 import com.climbing_log.model.Like;
 import com.climbing_log.model.User;
 import com.climbing_log.repository.BlogRepository;
-import com.climbing_log.service.ifc.BlogService;
 
 @Service
-public class BlogServiceImpl implements BlogService {
+public class BlogService {
   @Autowired
   BlogRepository blogRepository;
   @Autowired
-  CommentServiceImpl commentService;
+  CommentService commentService;
   @Autowired
-  LikeServiceImpl likeService;
+  LikeService likeService;
   @Autowired
-  UserServiceImpl userService;
+  UserService userService;
 
-  @Override
   public Blog addBlog(Blog newBlog) {
     Blog blog = blogRepository.save(newBlog);
     return blog;
   }
 
-  @Override
   public Blog updateBlog(Blog newBlog) {
     // TODO Auto-generated method stub
     return null;
   }
 
-  @Override
   public Blog getBlogById(Integer id) {
     if (id == null) {
       throw new IllegalArgumentException("blog id must not be null");
@@ -92,7 +88,6 @@ public class BlogServiceImpl implements BlogService {
     return commentsWithUsername;
   }
 
-  @Override
   public List<Blog> getAllBlogs() {
     List<Blog> blogs = blogRepository.findAll();
     if (blogs == null || blogs.isEmpty()) {

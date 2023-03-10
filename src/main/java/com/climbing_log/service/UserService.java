@@ -8,10 +8,9 @@ import org.springframework.stereotype.Service;
 import com.climbing_log.exception.ResourceNotFoundException;
 import com.climbing_log.model.User;
 import com.climbing_log.repository.UserRepository;
-import com.climbing_log.service.ifc.UserService;
  
 @Service
-public class UserServiceImpl implements UserService {
+public class UserService {
     @Autowired
     UserRepository userRepository;
 

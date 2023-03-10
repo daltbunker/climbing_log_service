@@ -26,22 +26,22 @@ import com.climbing_log.model.CommentUser;
 import com.climbing_log.model.Like;
 import com.climbing_log.model.LikeId;
 import com.climbing_log.model.User;
-import com.climbing_log.service.BlogServiceImpl;
-import com.climbing_log.service.CommentServiceImpl;
-import com.climbing_log.service.LikeServiceImpl;
-import com.climbing_log.service.UserServiceImpl;
+import com.climbing_log.service.BlogService;
+import com.climbing_log.service.CommentService;
+import com.climbing_log.service.LikeService;
+import com.climbing_log.service.UserService;
 
 @RestController
 @RequestMapping(path = "/api/blog")
 public class BlogController {
   @Autowired
-  BlogServiceImpl blogService;
+  BlogService blogService;
   @Autowired
-  UserServiceImpl userService;
+  UserService userService;
   @Autowired
-  LikeServiceImpl likeService;
+  LikeService likeService;
   @Autowired
-  CommentServiceImpl commentService;
+  CommentService commentService;
 
   @PostMapping(path = "/add", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
   public ResponseEntity<Blog> addBlog(
@@ -50,7 +50,6 @@ public class BlogController {
     @RequestParam(required = true, value = "body") String body,
     @RequestParam(required = true, value = "user") String username
   ) {
-    System.out.println(body);
     Blog blog = new Blog();
     if (!image.getName().isEmpty()) {
       try {

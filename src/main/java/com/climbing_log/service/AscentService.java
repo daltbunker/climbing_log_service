@@ -11,20 +11,17 @@ import com.climbing_log.exception.ResourceNotFoundException;
 import com.climbing_log.model.Ascent;
 import com.climbing_log.model.AscentClimb;
 import com.climbing_log.repository.AscentRepository;
-import com.climbing_log.service.ifc.AscentService;
 
 @Service
-public class AscentServiceImpl implements AscentService {
+public class AscentService{
     @Autowired
     AscentRepository ascentRepository;
 
-    @Override
     public Ascent addAscent(Ascent newAscent) {
         Ascent ascent = ascentRepository.save(newAscent);
         return ascent;
     }
 
-    @Override
     public Ascent updateAscent(Ascent updatedAscent) {
         Ascent prevAscent = this.getAscentById(updatedAscent.getId());
         prevAscent.setAttempts(updatedAscent.getAttempts());
@@ -35,7 +32,6 @@ public class AscentServiceImpl implements AscentService {
         return ascent;
     }
 
-    @Override
     public Ascent getAscentById(Integer id) {
         if (id == null) {
             throw new IllegalArgumentException("ascent id must not be null");
@@ -50,7 +46,6 @@ public class AscentServiceImpl implements AscentService {
         return ascent;
     }
 
-    @Override
     public List<AscentClimb> getAllAscents() {
         List<Ascent> ascents = ascentRepository.findAll();
         if (ascents == null || ascents.isEmpty()) {
@@ -60,7 +55,6 @@ public class AscentServiceImpl implements AscentService {
         return ascentResponses;
     }
 
-    @Override
     public List<AscentClimb> getAscentsByUserId(Integer userId) {
         List<Ascent> ascents = ascentRepository.findAllByUserId(userId);
         if (ascents == null || ascents.isEmpty()) {

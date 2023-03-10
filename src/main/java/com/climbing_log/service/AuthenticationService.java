@@ -15,10 +15,9 @@ import com.climbing_log.model.AuthRequest;
 import com.climbing_log.model.User;
 import com.climbing_log.repository.UserRepository;
 import com.climbing_log.security.JwtService;
-import com.climbing_log.service.ifc.AuthenticationService;
 
 @Service
-public class AuthenticationServiceImpl implements AuthenticationService {
+public class AuthenticationService {
   @Autowired
   UserRepository userRepository;
   @Autowired

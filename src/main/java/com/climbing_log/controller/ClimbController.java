@@ -20,8 +20,8 @@ import com.climbing_log.model.Climb;
 import com.climbing_log.model.ClimbLocation;
 import com.climbing_log.model.ClimbRequest;
 import com.climbing_log.model.Location;
-import com.climbing_log.service.ifc.ClimbService;
-import com.climbing_log.service.ifc.LocationService;
+import com.climbing_log.service.ClimbService;
+import com.climbing_log.service.LocationService;
 
 @RestController
 @RequestMapping(path = "/api/climbs")

@@ -10,7 +10,7 @@ import com.climbing_log.model.Comment;
 import com.climbing_log.repository.CommentRepository;
 
 @Service
-public class CommentServiceImpl {
+public class CommentService {
   @Autowired
   private CommentRepository commentRepository;
 
