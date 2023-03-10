@@ -54,6 +54,8 @@ public class BlogController {
     @RequestBody Blog blog,
     @RequestParam(required = true, value = "user") String username
   ) {
+    System.out.println(blog.getTitle());
+    System.out.println(blog.getBody());
     blog.setAuthor(username);
     Blog addedBlog = blogService.addBlog(blog);
     return ResponseEntity.ok(addedBlog);
