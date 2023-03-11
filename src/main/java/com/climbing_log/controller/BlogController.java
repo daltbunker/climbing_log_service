@@ -3,6 +3,7 @@ package com.climbing_log.controller;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -55,18 +56,13 @@ public class BlogController {
   public ResponseEntity<Blog> addBlog(
     @RequestBody Blog blog,
     @RequestParam(required = true, value = "user") String username
-  ) throws UnsupportedEncodingException {
-    OutputStreamWriter writer = new OutputStreamWriter(System.out, "UTF-8");
-    try {
-        writer.write(blog.getBody());
-        writer.write(blog.getTitle());
-        writer.flush();
-    } catch (IOException e) {
-        e.printStackTrace();
-    }
-    // System.out.println(blog.getTitle());
-    // System.out.println(blog.getBody());
+  ) {
+    System.out.println(blog.getBody());
+    byte[] bytes = blog.getBody().getBytes(StandardCharsets.UTF_8); 
+    String utf8 = new String(bytes, StandardCharsets.UTF_8);
+    System.out.println(utf8);
     blog.setAuthor(username);
+    blog.setBody(utf8);
     Blog addedBlog = blogService.addBlog(blog);
     return ResponseEntity.ok(addedBlog);
   }
