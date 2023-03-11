@@ -55,16 +55,6 @@ public class BlogController {
     @RequestBody Blog blog,
     @RequestParam(required = true, value = "user") String username
   ) {
-    byte[] bytes = blog.getBody().getBytes(StandardCharsets.UTF_8);
-    byte[] bytes2 = blog.getTitle().getBytes(StandardCharsets.UTF_8);
-    for (int i = 0; i < 15; i++) {
-      System.out.println("body: " + bytes[i]);
-      System.out.println("title: " + bytes2[i]);
-    }
-
-    String body2 = blog.getBody().substring(0, 15);
-    System.out.println("body2: " + body2);
-    blog.setBody2(body2);
     blog.setAuthor(username);
     Blog addedBlog = blogService.addBlog(blog);
     return ResponseEntity.ok(addedBlog);

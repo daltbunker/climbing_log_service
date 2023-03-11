@@ -38,7 +38,7 @@ public class Blog {
   private String body;
   private String title;
   
-  @Column(name = "body2", columnDefinition = "TEXT")
+  @Column(name="body2", length=4000)
   private String body2;
 
   @Lob
