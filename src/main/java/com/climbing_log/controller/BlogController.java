@@ -1,7 +1,6 @@
 package com.climbing_log.controller;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -133,13 +132,13 @@ public class BlogController {
     if (!newImage.getName().isEmpty()) {
       try {
         byte[] byteImage = newImage.getBytes();
-        image.setImage(byteImage);
+        image.setBytes(byteImage);
       } catch(IOException e) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
       }
     }
     Image savedImage = imageService.addImage(image);
-    blog.setImageObject(savedImage);
+    blog.setImage(savedImage);
     blogService.updateBlog(blog);
     return ResponseEntity.ok(savedImage);
   }

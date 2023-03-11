@@ -14,7 +14,7 @@ public class Image {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Integer id;
   @Lob
-  private byte[] image;
+  private byte[] bytes;
   
   public Integer getId() {
     return id;
@@ -22,10 +22,10 @@ public class Image {
   public void setId(Integer id) {
     this.id = id;
   }
-  public byte[] getImage() {
-    return image;
+  public byte[] getBytes() {
+    return bytes;
   }
-  public void setImage(byte[] image) {
-    this.image = image;
+  public void setBytes(byte[] bytes) {
+    this.bytes = bytes;
   }
 }

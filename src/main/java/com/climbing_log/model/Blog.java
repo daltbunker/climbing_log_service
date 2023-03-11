@@ -9,7 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -26,22 +25,24 @@ public class Blog {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Integer id;
+
   @ManyToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "user_id")
   @JsonIgnore
   private User user;
+
   private String author;
+
   @CreationTimestamp
   private LocalDateTime createdDate;
+
   private String body;
   private String title;
 
-  @Lob
-  private byte[] image;
   @OneToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "image_id")
   @JsonIgnore
-  private Image imageObject;
+  private Image image;
 
   public Integer getId() {
     return id;
@@ -82,16 +83,10 @@ public class Blog {
   public void setTitle(String title) {
     this.title = title;
   }
-  public byte[] getImage() {
+  public Image getImage() {
     return image;
   }
-  public void setImage(byte[] image) {
+  public void setImage(Image image) {
     this.image = image;
-  }
-  public Image getImageObject() {
-    return imageObject;
-  }
-  public void setImageObject(Image imageObject) {
-    this.imageObject = imageObject;
   }
 }

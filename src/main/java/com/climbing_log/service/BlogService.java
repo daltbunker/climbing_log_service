@@ -59,7 +59,7 @@ public class BlogService {
     blogPage.setId(id);
     blogPage.setAuthor(blog.getAuthor());
     blogPage.setCreatedDate(blog.getCreatedDate());
-    blogPage.setImage(blog.getImage());
+    blogPage.setImage(blog.getImage().getBytes());
     blogPage.setBody(blog.getBody());
     blogPage.setTitle(blog.getTitle());
     return blogPage;
@@ -108,8 +108,8 @@ public class BlogService {
       blogThumbnail.setId(blog.getId());
       blogThumbnail.setCreatedDate(blog.getCreatedDate());
       blogThumbnail.setTitle(blog.getTitle());
-      if (blog.getImageObject() != null) {
-        blogThumbnail.setImageId(blog.getImageObject().getId());
+      if (blog.getImage() != null) {
+        blogThumbnail.setImageId(blog.getImage().getId());
       }
       if (blog.getBody().length() > 350) {
         String trimmedBody = blog.getBody().substring(0, 350);
