@@ -3,6 +3,7 @@ package com.climbing_log.model;
 import java.time.LocalDateTime;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
@@ -36,6 +37,10 @@ public class Blog {
   @Lob
   private String body;
   private String title;
+  
+  @Column(name = "body2", columnDefinition = "TEXT")
+  private String body2;
+
   @Lob
   private byte[] image;
   @OneToOne(cascade = CascadeType.ALL)
@@ -93,5 +98,11 @@ public class Blog {
   }
   public void setImageObject(Image imageObject) {
     this.imageObject = imageObject;
+  }
+  public String getBody2() {
+    return body2;
+  }
+  public void setBody2(String body2) {
+    this.body2 = body2;
   }
 }
