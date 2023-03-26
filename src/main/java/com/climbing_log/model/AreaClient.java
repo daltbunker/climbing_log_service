@@ -6,6 +6,7 @@ public class AreaClient {
   private int id;
   private String name;
   private int climbCount;
+  private int childrenCount;
   private List<Path> path;
 
   public int getId() {
@@ -31,5 +32,11 @@ public class AreaClient {
   }
   public void setPath(List<Path> path) {
     this.path = path;
+  }
+  public int getChildrenCount() {
+    return childrenCount;
+  }
+  public void setChildrenCount(int childrenCount) {
+    this.childrenCount = childrenCount;
   }
 }

@@ -59,4 +59,10 @@ public interface AreaRepository extends JpaRepository<Area, Integer> {
   @Query(nativeQuery = true)
   public List<AreaPath> findAllAreasWithPath(int searchWithCountry, Integer countryId, String query);
 
+  @Query(
+    value = "SELECT COUNT(1) FROM area WHERE area_id = :id",
+    nativeQuery = true 
+  )
+  public Integer getChildrenCount(Integer id);
+
 }

@@ -102,6 +102,7 @@ public class AreaService {
       areaClient.setId(area.getId());
       areaClient.setName(area.getName());
       areaClient.setClimbCount(climbService.getCountByArea(area.getId()));
+      areaClient.setChildrenCount(this.getChildrenCount(area.getId()));
       areaClient.setPath(this.createPath(area.getPath(), area.getPathIds()));
       areasForClient.add(areaClient);
     }
@@ -115,9 +116,13 @@ public class AreaService {
       areaClient.setId(area.getId());
       areaClient.setName(area.getName());
       areaClient.setClimbCount(climbService.getCountByArea(area.getId()));
+      areaClient.setChildrenCount(this.getChildrenCount(area.getId()));
       childrenForClient.add(areaClient);
     }
     return childrenForClient;
   }
 
+  public Integer getChildrenCount(Integer id) {
+      return areaRepository.getChildrenCount(id);
+  }
 }
