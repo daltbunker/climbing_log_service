@@ -33,7 +33,7 @@ public class AscentController {
     @Autowired
     UserService userService;
 
-    @PostMapping(path = "/add")
+    @PostMapping(path = "")
     public ResponseEntity<Ascent> addAscent(
             @RequestBody @Valid Ascent newAscent,
             @RequestParam(required = true, name = "user") String username,
@@ -46,10 +46,10 @@ public class AscentController {
         return ResponseEntity.ok(ascent);
     }
 
-    @PutMapping(path = "/edit")
+    @PutMapping(path = "/{id}")
     public ResponseEntity<Ascent> updateAscent(
             @RequestBody @Valid Ascent updatedAscent,
-            @RequestParam(required = true, name = "id") Integer id) {
+            @PathVariable(name = "id") Integer id) {
         updatedAscent.setId(id);
         Ascent ascent = ascentService.updateAscent(updatedAscent);
         return ResponseEntity.ok(ascent);
@@ -62,7 +62,7 @@ public class AscentController {
         return ResponseEntity.ok(ascent);
     }
 
-    @GetMapping(path = "/all")
+    @GetMapping(path = "")
     public ResponseEntity<List<AscentClimb>> getAllAscents(
             @RequestParam(required = false, name = "user") String username) {
         if (username != null) {

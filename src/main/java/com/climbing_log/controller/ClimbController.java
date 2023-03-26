@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,12 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.climbing_log.enums.ClimbType;
 import com.climbing_log.enums.Grade;
+import com.climbing_log.model.Area;
 import com.climbing_log.model.Climb;
-import com.climbing_log.model.ClimbLocation;
 import com.climbing_log.model.ClimbRequest;
-import com.climbing_log.model.Location;
+import com.climbing_log.service.AreaService;
 import com.climbing_log.service.ClimbService;
-import com.climbing_log.service.LocationService;
 
 @RestController
 @RequestMapping(path = "/api/climbs")
@@ -29,17 +29,11 @@ public class ClimbController {
     @Autowired
     ClimbService climbService;
     @Autowired
-    LocationService locationService;
+    AreaService areaService;
 
-    @PostMapping(path = "/add") 
+    @PostMapping(path = "") 
     public ResponseEntity<Climb> addClimb(
             @RequestBody @Valid ClimbRequest newClimb) {
-        Location location = new Location();
-        location.setArea(newClimb.getArea());
-        location.setCountry(newClimb.getCountry());
-        location.setSector(newClimb.getSector());
-        location.setState(newClimb.getState());
-
         Climb climb = new Climb();
         Grade grade = Grade.fromName(newClimb.getGrade());
         if (newClimb.getGrade().charAt(0) == 'V') {
@@ -50,17 +44,19 @@ public class ClimbController {
         climb.setName(newClimb.getName());
         climb.setGrade(grade);
 
-        Integer locationId = locationService.getLocationId(location);
-        if (locationId > 0) {
-            Location existingLocation = locationService.getLocationById(locationId);
-            climb.setLocation(existingLocation);
-        } else {
-            Location newLocation = locationService.addLocation(location);
-            climb.setLocation(newLocation);
+        if (newClimb.getCountryId() == null) {
+            System.out.println("bad req");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-
+        
+        Area area = this.areaService.saveArea(newClimb.getPath(), newClimb.getCountryId());
+        if (area == null) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+        climb.setArea(area);
         Climb addedClimb = climbService.addClimb(climb);
         return ResponseEntity.ok(addedClimb);
+        
     }
 
     @GetMapping(path = "/{id}")
@@ -70,19 +66,10 @@ public class ClimbController {
         return ResponseEntity.ok(climb);
     }
 
-    @GetMapping(path = "/all")
-    public ResponseEntity<List<ClimbLocation>> getAllClimbs(
-        @RequestParam(required = false, name = "name") String name,
-        @RequestParam(required = false, name = "location_id") Integer locationId) {
-            if (locationId != null) {
-                List<ClimbLocation> climbs = climbService.getClimbsByLocation(locationId);
-                return ResponseEntity.ok(climbs);
-            } else if (name != null) {
-                List<ClimbLocation> climbs = climbService.getClimbsByName(name);
-                return ResponseEntity.ok(climbs);
-            } else {
-                List<ClimbLocation> climbs = climbService.getAllClimbs();
-                return ResponseEntity.ok(climbs);
-            }
+    @GetMapping(path = "")
+    public ResponseEntity<List<Climb>> findClimbsByAreaId(
+        @RequestParam(required = true, name = "area_id") int areaId
+    ) {
+        return ResponseEntity.ok(climbService.findClimbsByAreaId(areaId));
     }
 }

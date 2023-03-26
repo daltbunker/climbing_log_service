@@ -28,16 +28,20 @@ public class Climb {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+
     private String name;
     private ClimbType type;
     private Grade grade;
-    @ManyToOne(cascade = CascadeType.ALL) 
-    @JoinColumn(name = "location_id")
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "area_id")
     @JsonIgnore
-    private Location location;
+    private Area area;
+
     @OneToMany(mappedBy = "climb") // "climb" refers to property name in Ascent Class
     @JsonIgnore
     private Set<Ascent> ascents;
+
     @CreationTimestamp
     private LocalDateTime createdDate;
     
@@ -71,16 +75,16 @@ public class Climb {
     public void setGrade(Grade grade) {
         this.grade = grade;
     }
-    public Location getLocation() {
-        return location;
-    }
-    public void setLocation(Location location) {
-        this.location = location;
-    }
     public LocalDateTime getCreatedDate() {
         return createdDate;
     }
     public void setCreatedDate(LocalDateTime createdDate) {
         this.createdDate = createdDate;
+    }
+    public Area getArea() {
+        return area;
+    }
+    public void setArea(Area area) {
+        this.area = area;
     }
 }

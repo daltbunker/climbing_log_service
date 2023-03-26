@@ -1,6 +1,5 @@
 package com.climbing_log.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -10,7 +9,6 @@ import org.springframework.stereotype.Service;
 import com.climbing_log.enums.ClimbType;
 import com.climbing_log.exception.ResourceNotFoundException;
 import com.climbing_log.model.Climb;
-import com.climbing_log.model.ClimbLocation;
 import com.climbing_log.repository.ClimbRepository;
 
 @Service
@@ -41,45 +39,12 @@ public class ClimbService {
         return climb;
     }
 
-    public List<ClimbLocation> getAllClimbs() {
-        List<Climb> climbs = climbRepository.findAll();
-        if (climbs == null || climbs.isEmpty()) {
-            throw new ResourceNotFoundException("climbs not found");
-        }
-        List<ClimbLocation> climbLocations = this.getClimbLocations(climbs);
-        return climbLocations;
+    public List<Climb> findClimbsByAreaId(Integer id) {
+        List<Climb> climbs = climbRepository.findClimbsByAreaId(id);
+        return climbs;
     }
 
-    public List<ClimbLocation> getClimbsByLocation(Integer id) {
-        List<Climb> climbs = climbRepository.findClimbsByLocation(id);
-        if (climbs == null || climbs.isEmpty()) {
-            throw new ResourceNotFoundException("climbs not found");
-        }
-        List<ClimbLocation> climbLocations = this.getClimbLocations(climbs);
-        return climbLocations;
-    }
-
-    public List<ClimbLocation> getClimbsByName(String name) {
-        List<Climb> climbs = climbRepository.findClimbsByName(name);
-        if (climbs == null || climbs.isEmpty()) {
-            throw new ResourceNotFoundException("climbs not found");
-        }
-        List<ClimbLocation> climbLocations = this.getClimbLocations(climbs);
-        return climbLocations;
-    }
-
-    private List<ClimbLocation> getClimbLocations(List<Climb> climbs) {
-        List<ClimbLocation> climbLocations = new ArrayList<>();
-        for(Climb climb: climbs) {
-            ClimbLocation climbLocation = new ClimbLocation();
-            climbLocation.setId(climb.getId());
-            climbLocation.setName(climb.getName());
-            climbLocation.setType(climb.getType().toString());
-            climbLocation.setGrade(climb.getGrade().toString());
-            climbLocation.setArea(climb.getLocation().getArea());
-            climbLocation.setSector(climb.getLocation().getSector());
-            climbLocations.add(climbLocation);
-        }
-        return climbLocations;
+    public Integer getCountByArea(Integer id) {
+        return climbRepository.getCountByArea(id);
     }
 }

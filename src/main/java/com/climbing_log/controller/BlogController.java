@@ -49,7 +49,7 @@ public class BlogController {
   @Autowired
   ImageService imageService;
 
-  @PostMapping(path = "/add")
+  @PostMapping(path = "")
   public ResponseEntity<Blog> addBlog(
     @RequestBody Blog blog,
     @RequestParam(required = true, value = "user") String username
@@ -59,7 +59,7 @@ public class BlogController {
     return ResponseEntity.ok(addedBlog);
   }
 
-  @GetMapping(path = "/all")
+  @GetMapping(path = "")
   public ResponseEntity<List<BlogThumbnail>> getAllBlogs() {
     List<BlogThumbnail> blogThumbnails = blogService.getAllBlogPages();
     return ResponseEntity.ok(blogThumbnails);

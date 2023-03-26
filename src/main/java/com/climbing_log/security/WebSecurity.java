@@ -36,7 +36,7 @@ public class WebSecurity {
           .antMatchers("/api/auth/**").permitAll()
           .antMatchers(HttpMethod.GET, "/api/blog/**").permitAll()
           .antMatchers(HttpMethod.GET, "/api/climbs/**").permitAll()
-          .antMatchers(HttpMethod.GET, "/api/locations/**").permitAll()
+          .antMatchers(HttpMethod.GET, "/api/area/**").permitAll()
           .antMatchers(HttpMethod.POST, "/api/blog/add*").hasAuthority(Role.ADMIN.name())
           .anyRequest()
           .authenticated()
