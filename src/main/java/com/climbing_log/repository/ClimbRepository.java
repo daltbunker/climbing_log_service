@@ -20,4 +20,7 @@ public interface ClimbRepository extends JpaRepository<Climb, Integer> {
 
     @Query("SELECT COUNT(1) FROM Climb c WHERE area.id = ?1")
     public Integer getCountByArea(Integer id);
+
+    @Query("SELECT DISTINCT c.name FROM Climb c WHERE c.name LIKE :query%")
+    public List<String> findClimbsByQuery(String query);
 }

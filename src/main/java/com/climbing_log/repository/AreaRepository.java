@@ -17,21 +17,6 @@ public interface AreaRepository extends JpaRepository<Area, Integer> {
   public Area findByName(String name);
 
   @Query(
-    value = "WITH RECURSIVE area_path (id, name, area_id, root) AS" +
-            "(SELECT id, name, area_id, name as root " +
-            "FROM area " +
-            "WHERE area_id IS NULL " +
-            "UNION ALL " +
-            "SELECT a.id, CONCAT(ap.name, ' > ', a.name), a.area_id, a.name " +
-            "FROM area_path AS ap JOIN area AS a " +
-            "ON ap.id = a.area_id)" +
-            "SELECT id, name, area_id " +
-            "FROM area_path " +
-            "WHERE root LIKE :query%",
-    nativeQuery = true)
-  public List<Area> findAreas(String query);
-
-  @Query(
     value = "SELECT id, name, area_id " + 
             "FROM area " +
             "WHERE area_id = :parentId",

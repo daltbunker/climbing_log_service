@@ -19,6 +19,7 @@ import com.climbing_log.enums.ClimbType;
 import com.climbing_log.enums.Grade;
 import com.climbing_log.model.Area;
 import com.climbing_log.model.Climb;
+import com.climbing_log.model.ClimbClient;
 import com.climbing_log.model.ClimbRequest;
 import com.climbing_log.service.AreaService;
 import com.climbing_log.service.ClimbService;
@@ -45,7 +46,6 @@ public class ClimbController {
         climb.setGrade(grade);
 
         if (newClimb.getCountryId() == null) {
-            System.out.println("bad req");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
         
@@ -67,9 +67,24 @@ public class ClimbController {
     }
 
     @GetMapping(path = "")
-    public ResponseEntity<List<Climb>> findClimbsByAreaId(
-        @RequestParam(required = true, name = "area_id") int areaId
+    public ResponseEntity<List<ClimbClient>> findClimbs(
+        @RequestParam(required = false, name = "area_id") Integer areaId,
+        @RequestParam(required = false, name = "name") String name 
     ) {
-        return ResponseEntity.ok(climbService.findClimbsByAreaId(areaId));
+        if (areaId != null && name == null) {
+            return ResponseEntity.ok(climbService.findClimbsByAreaId(areaId));
+        } else if (name != null && areaId == null) {
+            return ResponseEntity.ok(climbService.findClimbsByName(name));
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
     }
+
+    @GetMapping(path = "/names")
+    public ResponseEntity<List<String>> findClimbNamesByQuery(
+        @RequestParam(required = true, name = "query") String query 
+    ) {
+        return ResponseEntity.ok(climbService.findClimbsByQuery(query));
+    }
+
 }

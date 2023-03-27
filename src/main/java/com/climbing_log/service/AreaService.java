@@ -38,11 +38,6 @@ public class AreaService {
     return area;
   }
 
-  public List<Area> findAreas(String query) {
-    List<Area> areas = areaRepository.findAreas(query);
-    return areas;
-  } 
-
   public List<Area> getCountries() {
     List<Area> countries = areaRepository.getCountries();
     return countries;
@@ -59,7 +54,16 @@ public class AreaService {
   } 
 
   public List<AreaPath> findAllAreasWithPath(Integer countryId, String query) {
-    return areaRepository.findAllAreasWithPath(countryId == null ? 0 : 1, countryId, query);
+    List<AreaPath> areas = areaRepository.findAllAreasWithPath(countryId == null ? 0 : 1, countryId, query);
+    List<AreaPath> areasWithData = new ArrayList<>();
+    for (AreaPath area: areas) {
+      Integer childCount = this.getChildrenCount(area.getId());
+      Integer climbCount = climbService.getCountByArea(area.getId());
+      if (childCount > 0 || climbCount > 0) {
+        areasWithData.add(area);
+      }
+    }
+    return areasWithData;
   }
 
   public Area saveArea(List<Path> path, Integer countryId) {
@@ -71,7 +75,6 @@ public class AreaService {
     for(Path area: path) {
       currentArea = area.getId() > 0 ? this.findById(area.getId()) : null;
       if (currentArea == null) {
-        System.out.println("creating new area");
         Area newArea = new Area();
         newArea.setName(area.getName());
         newArea.setArea(parentArea);
