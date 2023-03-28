@@ -24,7 +24,7 @@ import com.climbing_log.service.ClimbService;
 import com.climbing_log.service.UserService;
 
 @RestController
-@RequestMapping(path = "/api/ascents")
+@RequestMapping(path = "/api/ascent")
 public class AscentController {
     @Autowired
     AscentService ascentService;

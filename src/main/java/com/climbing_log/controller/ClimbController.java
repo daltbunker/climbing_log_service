@@ -25,7 +25,7 @@ import com.climbing_log.service.AreaService;
 import com.climbing_log.service.ClimbService;
 
 @RestController
-@RequestMapping(path = "/api/climbs")
+@RequestMapping(path = "/api/climb")
 public class ClimbController {
     @Autowired
     ClimbService climbService;

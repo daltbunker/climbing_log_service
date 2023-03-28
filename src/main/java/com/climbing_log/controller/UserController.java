@@ -12,7 +12,7 @@ import com.climbing_log.model.AuthRequest;
 import com.climbing_log.service.AuthenticationService;
 
 @RestController
-@RequestMapping(path = "api")
+@RequestMapping(path = "/api")
 public class UserController {
     @Autowired
     AuthenticationService authenticationService;
