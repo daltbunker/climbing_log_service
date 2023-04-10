@@ -57,9 +57,6 @@ public class AscentService{
 
     public List<AscentClimb> getAscentsByUserId(Integer userId) {
         List<Ascent> ascents = ascentRepository.findAllByUserId(userId);
-        if (ascents == null || ascents.isEmpty()) {
-            throw new ResourceNotFoundException("ascents not found");
-        }
         List<AscentClimb> ascentResponses = this.createAscentClimb(ascents); 
         return ascentResponses;
     }

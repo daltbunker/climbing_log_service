@@ -37,7 +37,7 @@ public class WebSecurity {
           .antMatchers(HttpMethod.GET, "/api/blog/**").permitAll()
           .antMatchers(HttpMethod.GET, "/api/climb/**").permitAll()
           .antMatchers(HttpMethod.GET, "/api/area/**").permitAll()
-          .antMatchers(HttpMethod.POST, "/api/blog/add*").hasAuthority(Role.ADMIN.name())
+          .antMatchers(HttpMethod.POST, "/api/blog/**").hasAuthority(Role.ADMIN.name())
           .anyRequest()
           .authenticated()
           .and()
@@ -54,7 +54,7 @@ public class WebSecurity {
     CorsConfigurationSource corsConfigurationSource() {
       CorsConfiguration configuration = new CorsConfiguration();
       configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200", "https://climbing-log-client.onrender.com"));
-      configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "OPTIONS"));
+      configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "OPTIONS", "DELETE"));
       configuration.setAllowedHeaders(Arrays.asList("*"));
       UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
       source.registerCorsConfiguration("/api/**", configuration);

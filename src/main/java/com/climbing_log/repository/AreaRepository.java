@@ -27,7 +27,8 @@ public interface AreaRepository extends JpaRepository<Area, Integer> {
   @Query(
     value = "SELECT id, name, area_id " + 
             "FROM area " +
-            "WHERE area_id IS NULL",
+            "WHERE area_id IS NULL " + 
+            "ORDER BY name",
     nativeQuery = true
   )
   public List<Area> getCountries();
