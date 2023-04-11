@@ -38,7 +38,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
         resultClass = AreaPath.class,
         resultSetMapping ="areaPathMapping",
         query = "WITH RECURSIVE area_path (id, name, path, pathIds) AS" +
-                "(SELECT id, name, name as path, CONVERT(id, CHAR) as pathIds " +
+                "(SELECT id, name, name as path, CAST(id as char(100)) as pathIds " +
                 "FROM area " +
                 "WHERE (? = 0 AND area_id IS NULL) OR area_id = ? " +
                 "UNION ALL " +
