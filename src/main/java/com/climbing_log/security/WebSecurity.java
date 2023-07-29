@@ -53,7 +53,7 @@ public class WebSecurity {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
       CorsConfiguration configuration = new CorsConfiguration();
-      configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200", "https://climbing-log-client.onrender.com"));
+      configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200", "https://climbing-log-client.onrender.com", "https://soulclimbers.org"));
       configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "OPTIONS", "DELETE"));
       configuration.setAllowedHeaders(Arrays.asList("*"));
       UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
