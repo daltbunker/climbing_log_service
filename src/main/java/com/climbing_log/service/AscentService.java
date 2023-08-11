@@ -16,9 +16,39 @@ import com.climbing_log.repository.AscentRepository;
 public class AscentService{
     @Autowired
     AscentRepository ascentRepository;
+    @Autowired
+    ClimbService climbService;
+
+    private String padLeft(String s, int n) {
+        return String.format("%" + s + "s", n).replace(' ', '0');
+    }
+
+    private String getAverageGrade(List<String> grades) {
+        int gradesSize = grades.size();
+        if (gradesSize == 0) {
+            return null;
+        }
+        int redSum = 0;
+        int greenSum = 0;
+        int blueSum = 0;
+        for(String grade: grades) {
+            if (grade != null) {
+                redSum += Integer.parseInt(grade.substring(1, 3), 16);
+                greenSum += Integer.parseInt(grade.substring(3, 5), 16);
+                blueSum += Integer.parseInt(grade.substring(5, 7), 16);
+            }
+        }
+        return "#" + padLeft(Integer.toHexString(redSum / gradesSize), 2)
+                + padLeft(Integer.toHexString(greenSum / gradesSize), 2)
+                + padLeft(Integer.toHexString(blueSum / gradesSize), 2);
+    }
 
     public Ascent addAscent(Ascent newAscent) {
         Ascent ascent = ascentRepository.save(newAscent);
+        climbService.updateGrade(
+            newAscent.getClimb().getId(), 
+            getAverageGrade(ascentRepository.getGradesByClimbId(newAscent.getClimb().getId()))
+        );
         return ascent;
     }
 
@@ -70,6 +100,7 @@ public class AscentService{
             ascentResponse.setAttempts(ascent.getAttempts());
             ascentResponse.setComment(ascent.getComment());
             ascentResponse.setDate(ascent.getDate());
+            ascentResponse.setGrade(ascent.getGrade());
             ascentResponses.add(ascentResponse);
         }
         return ascentResponses; 

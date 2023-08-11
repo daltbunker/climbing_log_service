@@ -18,7 +18,6 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.climbing_log.enums.ClimbType;
-import com.climbing_log.enums.Grade;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -31,7 +30,7 @@ public class Climb {
 
     private String name;
     private ClimbType type;
-    private Grade grade;
+    private String grade;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "area_id")
@@ -69,10 +68,10 @@ public class Climb {
     public void setType(ClimbType type) {
         this.type = type;
     }
-    public Grade getGrade() {
+    public String getGrade() {
         return grade;
     }
-    public void setGrade(Grade grade) {
+    public void setGrade(String grade) {
         this.grade = grade;
     }
     public LocalDateTime getCreatedDate() {

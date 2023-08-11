@@ -14,4 +14,7 @@ public interface AscentRepository extends JpaRepository<Ascent, Integer> {
 
     @Query("SELECT a, c.name FROM Ascent as a, Climb as c WHERE a.climb.id = c.id AND a.user.id = ?1")
     public List<Ascent> findAllByUserId(Integer userId);
+
+    @Query("SELECT a.grade FROM Ascent as a WHERE a.climb.id = ?1")
+    public List<String> getGradesByClimbId(Integer climbId);
 }

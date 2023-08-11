@@ -10,6 +10,7 @@ public class AscentClimb {
   private String comment;
   private ClimbAttempt attempts;
   private LocalDateTime date;
+  private String grade;
 
   public Integer getId() {
     return id;
@@ -40,5 +41,11 @@ public class AscentClimb {
   }
   public void setDate(LocalDateTime date) {
     this.date = date;
+  }
+  public String getGrade() {
+    return grade;
+  }
+  public void setGrade(String grade) {
+    this.grade = grade;
   }
 }

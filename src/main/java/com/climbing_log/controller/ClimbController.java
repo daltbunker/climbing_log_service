@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.climbing_log.enums.ClimbType;
-import com.climbing_log.enums.Grade;
 import com.climbing_log.model.Area;
 import com.climbing_log.model.Climb;
 import com.climbing_log.model.ClimbClient;
@@ -36,14 +35,9 @@ public class ClimbController {
     public ResponseEntity<Climb> addClimb(
             @RequestBody @Valid ClimbRequest newClimb) {
         Climb climb = new Climb();
-        Grade grade = Grade.fromName(newClimb.getGrade());
-        if (newClimb.getGrade().charAt(0) == 'V') {
-            climb.setType(ClimbType.BOULDER);
-        } else {
-            climb.setType(ClimbType.ROUTE);
-        }
+        climb.setType(newClimb.getType().equals("boulder") ? ClimbType.BOULDER : ClimbType.ROUTE);
         climb.setName(newClimb.getName());
-        climb.setGrade(grade);
+        climb.setGrade("#ffffff");
 
         if (newClimb.getCountryId() == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();

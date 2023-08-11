@@ -39,6 +39,7 @@ public class Ascent {
     private LocalDateTime date;
     @CreationTimestamp
     private LocalDateTime createdDate;
+    private String grade;
 
     public Integer getId() {
         return id;
@@ -81,5 +82,11 @@ public class Ascent {
     }
     public void setCreatedDate(LocalDateTime createdDate) {
         this.createdDate = createdDate;
+    }
+    public String getGrade() {
+        return grade;
+    }
+    public void setGrade(String grade) {
+        this.grade = grade;
     }
 }

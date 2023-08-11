@@ -1,11 +1,9 @@
 package com.climbing_log.model;
 
-import com.climbing_log.enums.Grade;
-
 public class ClimbClient {
   private Integer id; 
   private String name;
-  private Grade grade;
+  private String grade;
   private String area;
 
   public Integer getId() {
@@ -20,10 +18,10 @@ public class ClimbClient {
   public void setName(String name) {
     this.name = name;
   }
-  public Grade getGrade() {
+  public String getGrade() {
     return grade;
   }
-  public void setGrade(Grade grade) {
+  public void setGrade(String grade) {
     this.grade = grade;
   }
   public String getArea() {

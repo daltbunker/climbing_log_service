@@ -7,7 +7,6 @@ public class ClimbRequest {
   private String type;
   private Integer countryId;
   private List<Path> path;
-  private String grade;
 
   public String getName() {
     return name;
@@ -20,12 +19,6 @@ public class ClimbRequest {
   }
   public void setType(String type) {
     this.type = type;
-  }
-  public String getGrade() {
-    return grade;
-  }
-  public void setGrade(String grade) {
-    this.grade = grade;
   }
   public Integer  getCountryId() {
     return countryId;
