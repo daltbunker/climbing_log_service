@@ -20,7 +20,7 @@ public class AscentService{
     ClimbService climbService;
 
     private String padLeft(String s, int n) {
-        return String.format("%" + s + "s", n).replace(' ', '0');
+        return String.format("%" + n + "s", s).replace(' ', '0');
     }
 
     private String getAverageGrade(List<String> grades) {
