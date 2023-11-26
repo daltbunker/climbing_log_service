@@ -57,8 +57,15 @@ public class AscentService{
         prevAscent.setAttempts(updatedAscent.getAttempts());
         prevAscent.setComment(updatedAscent.getComment());
         prevAscent.setDate(updatedAscent.getDate());
+        prevAscent.setGrade(updatedAscent.getGrade());
+        prevAscent.setOver200lbs(updatedAscent.getOver200lbs());
 
         Ascent ascent = ascentRepository.save(prevAscent);
+
+        climbService.updateGrade(
+          ascent.getClimb().getId(), 
+          getAverageGrade(ascentRepository.getGradesByClimbId(ascent.getClimb().getId()))
+      );
         return ascent;
     }
 
@@ -101,6 +108,8 @@ public class AscentService{
             ascentResponse.setComment(ascent.getComment());
             ascentResponse.setDate(ascent.getDate());
             ascentResponse.setGrade(ascent.getGrade());
+            ascentResponse.setOver200lbs(ascent.getOver200lbs());
+
             ascentResponses.add(ascentResponse);
         }
         return ascentResponses; 

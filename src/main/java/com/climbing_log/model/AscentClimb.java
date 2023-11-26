@@ -11,6 +11,7 @@ public class AscentClimb {
   private ClimbAttempt attempts;
   private LocalDateTime date;
   private String grade;
+  private Boolean over200lbs;
 
   public Integer getId() {
     return id;
@@ -47,5 +48,11 @@ public class AscentClimb {
   }
   public void setGrade(String grade) {
     this.grade = grade;
+  }
+  public Boolean getOver200lbs() {
+    return over200lbs;
+  }
+  public void setOver200lbs(Boolean over200lbs) {
+    this.over200lbs = over200lbs;
   }
 }

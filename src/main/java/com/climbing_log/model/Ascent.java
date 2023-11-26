@@ -40,6 +40,7 @@ public class Ascent {
     @CreationTimestamp
     private LocalDateTime createdDate;
     private String grade;
+    private Boolean over200lbs;
 
     public Integer getId() {
         return id;
@@ -88,5 +89,11 @@ public class Ascent {
     }
     public void setGrade(String grade) {
         this.grade = grade;
+    }
+    public Boolean getOver200lbs() {
+      return over200lbs;
+    }
+    public void setOver200lbs(Boolean over200lbs) {
+      this.over200lbs = over200lbs;
     }
 }
